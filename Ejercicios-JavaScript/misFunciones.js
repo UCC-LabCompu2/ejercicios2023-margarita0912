@@ -9,6 +9,9 @@
 
 ConvertirUninades = (id, valor) => {
     let met, pul, pie, yar;
+    if(valor.includes(",")){
+        valor=valor.replace(",",".");
+    }
     if (isNaN(valor)) {
         alert("el valor ingresado es incorrecto")
         met = "";
@@ -36,10 +39,10 @@ ConvertirUninades = (id, valor) => {
         pul = valor * 36;
         pie = valor * 3;
     }
-    document.unidades.unid_metro.value = met;
-    document.unidades.unid_pulgada.value = pul;
-    document.unidades.unid_pie.value = pie;
-    document.unidades.unid_yarda.value = yar;
+    document.unidades.unid_metro.value = Math.round(met*100)/100;
+    document.unidades.unid_pulgada.value = Math.round(pul*100)/100;
+    document.unidades.unid_pie.value = Number(pie).toFixed(2);
+    document.unidades.unid_yarda.value = Number(yar).toFixed(2);
 }
 
 /**
@@ -84,10 +87,101 @@ let mostrar_ocultar = (id)=>{
     }
 }
 
+/**
+ * suma dos inputs introducidos por el usuario
+ * @method sumar
+ */
 let sumar = () => {
     let res, s1, s2;
     s1= Number(document.operacionesMat.sum_num1.value);
-    s2=Number(document.operacionesMat.sum_num2.value)
+    s2=Number(document.operacionesMat.sum_num2.value);
     res= s1 + s2;
+    document.getElementById("totalS").innerHTML;
     document.operacionesMat.sum_total.value= res;
+}
+
+let restar = () => {
+    let re, s1, s2;
+    s1 = Number(document.operacionesMat.res_num1.value);
+    s2 = Number(document.operacionesMat.res_num2.value);
+    if (isNaN(s1)) {
+        alert("El valor ingresado es incorrecto");
+        s1 = "";
+    }
+    if (isNaN(s2)) {
+        alert("El valor ingresado es incorrecto");
+        s2 = "";
+    }
+    re = s1 - s2;
+    document.getElementById("totalR").innerHTML;
+    document.operacionesMat.res_total.value = re;
+}
+
+let multiplicar = () => {
+    let re, s1, s2;
+    s1 = Number(document.operacionesMat.mul_num1.value);
+    s2 = Number(document.operacionesMat.mul_num2.value);
+    if (isNaN(s1)) {
+        alert("El valor ingresado es incorrecto");
+        s1 = "";
+    }
+    if (isNaN(s2)) {
+        alert("El valor ingresado es incorrecto");
+        s2 = "";
+    }
+    re = s1 * s2;
+    document.getElementById("totalM").innerHTML;
+    document.operacionesMat.mul_total.value = re;
+}
+
+let dividir = () => {
+    let re, s1, s2;
+    s1 = Number(document.operacionesMat.div_num1.value);
+    s2 = Number(document.operacionesMat.div_num2.value);
+    if (isNaN(s1)) {
+        alert("El valor ingresado es incorrecto");
+        s1 = "";
+    }
+    if (isNaN(s2)) {
+        alert("El valor ingresado es incorrecto");
+        s2 = "";
+    }
+    re = s1 / s2;
+    document.getElementById("totalD").innerHTML;
+    document.operacionesMat.div_total.value = re;
+}
+
+let generarUrl = () => {
+    const dist = document.getElementById("distancia").value;
+    const uni = document.getElementsByName("unidades")[0].value;
+
+    const urlCompl = `segundaWeb.html#${dist}#${uni}`;
+    window.open(urlCompl);
+}
+
+let cargarValor = () => {
+    let urlCompleta = window.location.href;
+    console.log(urlCompleta);
+    urlCompleta = urlCompleta.split("#");
+
+    const distancia = urlCompleta[1];
+    const unidad = urlCompleta[2];
+    document.getElementById("dist").value= `${distancia} ${unidad}`;
+}
+
+let guardarLs = () => {
+    const dist = document.getElementById("distancia").value;
+    const uni = document.getElementsByName("unidades")[0].value;
+
+    localStorage.setItem("distanciaLS", dist);
+    localStorage.setItem("unidadLS", uni);
+    window.open("web2.html");
+}
+
+let cargarLs = () => {
+    const distancia = localStorage.getItem("distanciaLS");
+    const unidad = localStorage.getItem("unidadLS");
+    console.log(distancia);
+    console.log(unidad);
+    document.getElementById("dist").value= `${distancia} ${unidad}`;
 }
