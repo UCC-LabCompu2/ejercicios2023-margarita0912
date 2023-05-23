@@ -14,7 +14,7 @@ div{
 body{
     text-align: center;
     font-family: 'Roboto Slab', serif;
-    background: linear-gradient(to right, magenta, blue);
+    background: linear-gradient(to right, darkred,red,darkred);
 }
 h1, h2, h3 {
     text-shadow: 2px 3px magenta;
