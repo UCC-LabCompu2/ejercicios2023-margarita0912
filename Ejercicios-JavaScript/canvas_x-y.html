@@ -5,8 +5,9 @@
     <title>Canvas con Circulo y Cuadrado</title>
     <link href="https://fonts.googleapis.com/css?family=Inknut+Antiqua" rel="stylesheet">
     <link href="miEstilo.css" type="text/css" rel="stylesheet">
-</head>
+    <script type="text/javascript" src="misFunciones.js"></script>
 
+</head>
 <body>
 <h1>Canvas 3</h1>
 <p>Ejercicio: Dibujar  la imagen 'auto.png' en el canvas desde la posición pasada por parámetro. La función debe llamarse al presionar el boton.</p>
@@ -19,15 +20,21 @@
         <p>
             <label for="posicionY"> Y</label> = <input id="posicionY" type="text" name="inp_y">
         </p>
-        <button>
+        <button type="button" onclick="dibujarimagen(inp_x.value, inp_y.value)">
             Dibujar!
         </button>
     </form>
 </div>
 
-<canvas id="myCanvas" class="ejer">
+<canvas id="myCanvas" class="ejer" width="1000px" height="500px">
     Tu navegador no soporta el tag de HTML5 canvas.
 </canvas>
+
+<dialog id="mydialog">
+    <h3>Error al ingresar datos!</h3>
+    <p>Las coordenadas ingresadas estan fuera del lienzo</p>
+    <button type="button" onclick="cerrardialog()">Cerrar</button>
+</dialog>
 
 </body>
 </html>

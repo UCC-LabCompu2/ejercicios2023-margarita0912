@@ -92,12 +92,12 @@ let mostrar_ocultar = (id)=>{
  * @method sumar
  */
 let sumar = () => {
-    let res, s1, s2;
+    let re, s1, s2;
     s1= Number(document.operacionesMat.sum_num1.value);
     s2=Number(document.operacionesMat.sum_num2.value);
-    res= s1 + s2;
+    re= s1 + s2;
     document.getElementById("totalS").innerHTML;
-    document.operacionesMat.sum_total.value= res;
+    document.operacionesMat.sum_total.value= re;
 }
 
 let restar = () => {
@@ -184,4 +184,151 @@ let cargarLs = () => {
     console.log(distancia);
     console.log(unidad);
     document.getElementById("dist").value= `${distancia} ${unidad}`;
+}
+
+let dibujarcirculocuadrado = () => {
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas. getContext("2d");
+
+    let xMax = canvas.width;
+    let yMax = canvas.height;
+    ctx.fillStyle= "#333";
+
+    //dibujar rectangulo
+    let margen = 5;
+    ctx.fillRect(margen, yMax-120-margen, 130, 120);
+
+    //dibujar circulo
+    ctx.arc(xMax/2, yMax/2, 100, 0, 2*Math.PI);
+    ctx.stroke(); //dibujo bordes
+    ctx.fill(); //relleno
+}
+
+let limpiarCanvas = () => {
+    let canvas = document.getElementById("myCanvas");
+    canvas.width = canvas.width;
+}
+var bandera;
+let dibujar = () => {
+    let canvas = document.getElementById("myCanvas");
+    let ctx = canvas.getContext("2d");
+
+    let posx = event.clientX
+    let posy = event.clientY
+    console.log(posx, posy);
+
+    canvas.onmousedown = function (){bandera=true};
+    canvas.onmouseup = function (){bandera=false};
+
+    if (bandera) {
+        ctx.fillRect(posx, posy, 5, 5);
+        ctx.fill;
+    }
+}
+
+let dibujarCuadriculado = () => {
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const anchomax = canvas.width;
+    const alturamax = canvas.height;
+    const paso = 20;
+    let ejex = -24;
+    let ejey = 14;
+
+    //lineas verticales
+    for( let i=paso; i<anchomax; i+=paso ) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0); //dibuja linea desde
+        ctx.lineTo(i, alturamax); //dibuja linea hasta
+        ctx.strokeStyle = "#000000"; //pone color
+        ctx.stroke(); //dibuja
+        ctx.font= "10px Arial";
+        ctx.fillStyle = "#00000";
+        ctx.fillText(ejex, i, alturamax/2 );
+        ctx.closePath();
+        ejex++;
+    }
+
+    //lineas horizontales
+    for( let i=paso; i<anchomax; i+=paso ) {
+        ctx.beginPath();
+        ctx.moveTo(0, i); //dibuja linea desde
+        ctx.lineTo(anchomax, i); //dibuja linea hasta
+        ctx.strokeStyle = "#000000"; //pone color
+        ctx.stroke(); //dibuja
+        ctx.font= "10px Arial";
+        ctx.fillStyle = "#00000";
+        ctx.fillText(ejey, anchomax/2, i );
+        ctx.closePath();
+        ejey--;
+    }
+
+    //eje x
+    ctx.beginPath();
+    ctx.moveTo(0, alturamax/2); //dibuja linea desde
+    ctx.lineTo(anchomax, alturamax/2); //dibuja linea hasta
+    ctx.strokeStyle = "#ff0000"; //pone color
+    ctx.stroke(); //dibuja
+    ctx.closePath();
+
+    //eje x
+    ctx.beginPath();
+    ctx.moveTo(anchomax/2, 0); //linea desde
+    ctx.lineTo(anchomax/2, alturamax); //linea hasta
+    ctx.strokeStyle = "#ff0000"; //pone color
+    ctx.stroke(); //dibuja
+    ctx.closePath();
+}
+
+let dibujarimagen = (posx,posy) => {
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    const anchomax = canvas.width;
+    const alturamax = canvas.height;
+
+    canvas.width = canvas.width; //borra el auto ya dibujado
+
+    console.log(posx, posy);
+    let img = new Image();
+    img.src = "images/auto.png";
+
+    if (posx < 0 || posy < 0 || posx>=anchomax || posy>=alturamax) {
+        opendialog();
+    } else {
+        img.onload = function () {
+            ctx.drawImage(img, posx, posy);
+        }
+    }
+}
+
+let cerrardialog = () => {
+    const dialog = document.getElementById("mydialog");
+    dialog.close();
+}
+
+let opendialog = () => {
+    const dialog = document.getElementById("mydialog");
+    dialog.showModal();
+}
+
+var x = 0;
+var dx = 2;
+let animarauto = () => {
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let img = new Image();
+    img.src = "images/auto.png";
+
+    img.onload = function () {
+        canvas.width=canvas.width;
+        ctx.drawImage(img, x, 100);
+    }
+    x = x+dx;
+    console.log("la coordenada x es: "+ x);
+
+    if (x>canvas.width){
+        x=0;
+    }
 }
